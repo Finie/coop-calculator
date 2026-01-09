@@ -101,7 +101,7 @@ struct LoanDetails: View {
             }
             .safeAreaInset(edge: .bottom) {
                 Button {
-                    // Hook up download action when available.
+                    viewModel.downloadPDF()
                 } label: {
                     HStack(spacing: 10) {
                         Image(systemName: "arrow.down.to.line")
@@ -127,6 +127,9 @@ struct LoanDetails: View {
         .onAppear {
             viewModel.configure(context: context)
             viewModel.load(loanID: loanID)
+        }
+        .sheet(item: $viewModel.shareItem) { item in
+            ShareSheet(activityItems: [item.url])
         }
     }
 
